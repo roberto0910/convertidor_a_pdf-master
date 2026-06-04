@@ -1,0 +1,42 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+*.egg-info/
+dist/
+build/
+
+# Temporal files
+temp_files/
+*.tmp
+*.temp
+
+# Environment variables
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Node modules (if used)
+node_modules/
+
+# Logs
+*.log
+
+# Other
+.pytest_cache/
+.coverage
+htmlcov/

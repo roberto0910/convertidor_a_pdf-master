@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor Word a PDF | EVA-ITB</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,300..700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Biblioteca para trabajar con PDFs (Anotaciones) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+    <script src="https://unpkg.com/mammoth@1.4.8/mammoth.browser.min.js"></script>
+    <!-- NOTA: NO cargar login-styles.css aquí -->
+    <link rel="shortcut icon" type="image/x-icon"
+        href="https://eva.itb.edu.ec/pluginfile.php/1/theme_mb2nl/favicon/1761233098/Stickers%20-%20nuevos%20-%202023_Mesa%20de%20trabajo%201%20copia%205%20%281%29%20-%20copia.ico">
+</head>
+
+<body class="index-body">
+    <!-- Header idéntico al EVA-ITB -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-section">
+                    <div class="main-logo">
+                        <a href="#" aria-label="EVA Instituto Tecnologico Bolivariano">
+                            <img class="logo-light"
+                                src="https://eva.itb.edu.ec/pluginfile.php/1/theme_mb2nl/logo/1761233098/Stickers%20-%20nuevos%20-%202023_Mesa%20de%20trabajo%201%20copia%205%20%281%29.png"
+                                alt="EVA Instituto Tecnologico Bolivariano">
+                        </a>
+                    </div>
+                    <div class="institution-info">
+                        <h1>Instituto Tecnológico Bolivariano</h1>
+                        <p>Entorno Virtual de Aprendizaje (EVA)</p>
+                    </div>
+                </div>
+                <div class="user-info">
+                    <div class="user-avatar" id="userAvatar">RN</div>
+                    <div class="user-details">
+                        <div class="user-name-role">
+                            <div style="font-weight: 600;" id="userName">Usuario</div>
+                            <div id="userRole">Estudiante</div>
+                        </div>
+                        <div class="user-dropdown">
+                            <button class="dropdown-toggle" id="userDropdownBtn">
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <div class="dropdown-menu" id="userDropdownMenu">
+                                <div class="dropdown-header">
+                                    <div class="dropdown-avatar" id="dropdownAvatar">RN</div>
+                                    <div>
+                                        <div style="font-weight: 600;" id="dropdownName">Usuario</div>
+                                        <div style="font-size: 0.8rem; color: var(--itb-gray);" id="dropdownRole">
+                                            Estudiante</div>
+                                    </div>
+                                </div>
+                                <div class="dropdown-divider admin-only" id="adminDivider" style="display: none;"></div>
+                                <a href="#" class="dropdown-item admin-only" id="usersAdminDropdownBtn" style="display: none;">
+                                    <i class="fas fa-users-cog"></i> Gestión de Usuarios
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a href="logout.html" class="dropdown-item">
+                                    <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main content -->
+    <main class="main-content">
+        <div class="container">
+            <div class="page-title">
+                <h2><i class="fas fa-file-pdf"></i> Conversor de Archivos a PDF</h2>
+                <div class="page-subtitle">Convierte tus documentos Word, Excel, PowerPoint y TXT a PDF manteniendo el
+                    contenido</div>
+            </div>
+
+            <!-- Navigation buttons -->
+            <div class="nav-buttons">
+                <button class="nav-btn active" id="uploadBtn">
+                    <i class="fas fa-upload"></i> Subir Archivo
+                </button>
+                <button class="nav-btn" id="historyBtn">
+                    <i class="fas fa-history"></i> Historial
+                </button>
+                <button class="nav-btn" id="sharedBtn">
+                    <i class="fas fa-users"></i> Documentos compartidos
+                </button>
+                <button class="nav-btn" id="validateBtn">
+                    <i class="fas fa-file-signature"></i> Validar Firma
+                </button>
+
+            </div>
+
+            <!-- Upload section -->
+
+            <!-- Upload section -->
+            <section class="upload-section" id="uploadSection">
+                <div class="upload-card" id="dropArea">
+                    <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                    <h3 class="upload-title">Arrastra y suelta tu archivo aquí</h3>
+                    <p class="upload-info">Formatos soportados: .doc, .docx, .xls, .xlsx, .ppt, .pptx, .txt, .rtf.
+                        Tamaño máximo: 50MB</p>
+
+                    <div class="file-input-wrapper">
+                        <button class="btn" id="selectFileBtn">
+                            <i class="fas fa-file-upload"></i> Seleccionar archivo
+                        </button>
+                        <input type="file" class="file-input" id="fileInput"
+                            accept=".doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.rtf">
+                    </div>
+
+                    <div class="file-info" id="fileInfo">
+                        <div class="file-header">
+                            <div class="file-name">
+                                <i class="fas fa-file-word" id="fileIcon"></i>
+                                <span id="fileName">documento_ejemplo.docx</span>
+                            </div>
+                            <button class="btn btn-sm" id="removeFileBtn">
+                                <i class="fas fa-times"></i> Cambiar
+                            </button>
+                        </div>
+
+                        <div class="file-details">
+
+                            <div class="detail-item date">
+                                <i class="fas fa-calendar-alt"></i>
+                                <span>Fecha modificación:</span>
+                                <strong id="fileDate">15/03/2024</strong>
+                            </div>
+                            <div class="detail-item type">
+                                <i class="fas fa-file-alt"></i>
+                                <span>Tipo:</span>
+                                <strong id="fileType">Documento Word</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- History section -->
+            <section class="history-section" id="historySection" style="display: none;">
+                <div class="history-header">
+                    <h3><i class="fas fa-history"></i> Historial de Conversiones</h3>
+                    <p>Archivos convertidos anteriormente</p>
+                </div>
+
+                <div class="history-files" id="historyFiles">
+                    <!-- Los archivos del historial se cargarán aquí dinámicamente -->
+                    <div class="no-history">
+                        <i class="fas fa-history fa-3x" style="color: var(--itb-gray); margin-bottom: 20px;"></i>
+                        <p>No hay conversiones en el historial</p>
+                        <p style="font-size: 0.9rem; color: var(--itb-gray);">Los archivos que conviertas aparecerán
+                            aquí</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Shared Documents section -->
+            <section class="history-section" id="sharedSection" style="display: none;">
+                <div class="history-header">
+                    <h3><i class="fas fa-users"></i> Documentos Compartidos Conmigo</h3>
+                    <p>Archivos que otros usuarios han compartido para tu revisión o edición</p>
+                </div>
+
+                <div class="history-files" id="sharedFiles">
+                    <!-- Los archivos compartidos se cargarán aquí dinámicamente -->
+                    <div class="no-history">
+                        <i class="fas fa-folder-open fa-3x" style="color: var(--itb-gray); margin-bottom: 20px;"></i>
+                        <p>No tienes documentos compartidos</p>
+                        <p style="font-size: 0.9rem; color: var(--itb-gray);">Los documentos que compartan contigo
+                            aparecerán aquí</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Validate Signature section -->
+            <section class="history-section" id="validateSection" style="display: none;">
+                <div class="history-header">
+                    <h3><i class="fas fa-file-signature"></i> Validación de Firma Digital</h3>
+                    <p>Sube un documento PDF para verificar la autenticidad de su firma</p>
+                </div>
+
+                <div class="upload-card" id="dropAreaValidate" style="border-style: dashed; padding: 30px;">
+                    <i class="fas fa-search-plus upload-icon" style="font-size: 40px; margin-bottom: 15px;"></i>
+                    <h3 style="font-size: 1.2rem;">Selecciona el PDF a validar</h3>
+                    <div class="file-input-wrapper" style="margin-top: 20px;" id="validateRealInput">
+                        <button class="btn btn-sm" id="selectValidateBtn">
+                            <i class="fas fa-search"></i> Buscar PDF
+                        </button>
+                        <input type="file" class="file-input" id="validateInput" accept=".pdf">
+                    </div>
+                </div>
+
+                <div id="validationResult" class="history-files"
+                    style="display: none; margin-top: 30px; background: white; padding: 20px;">
+                    <!-- Los resultados aparecerán aquí -->
+                </div>
+            </section>
+
+
+            <!-- Action buttons -->
+            <div class="action-buttons">
+                <button class="btn" id="convertBtn">
+                    <i class="fas fa-sync-alt"></i> Convertir a PDF
+                </button>
+                <button class="btn" id="clearHistoryBtn" style="display: none;">
+                    <i class="fas fa-trash-alt"></i> Eliminar Historial
+                </button>
+                <button class="btn" id="clearSharedBtn" style="display: none;">
+                    <i class="fas fa-trash-alt"></i> Eliminar Documentos
+                </button>
+            </div>
+
+            <!-- Ventanas emergentes de estado (Modales) -->
+            <div class="status-overlay" id="statusOverlay" style="display: none;">
+                <div class="status-message" id="successMessage" style="display: none;">
+                    <div class="close-status" id="closeSuccess">&times;</div>
+                    <i class="fas fa-check-circle" style="color: var(--itb-success);"></i>
+                    <div>
+                        <div id="successTitle">¡Éxito!</div>
+                        <div id="successMessageText">El archivo PDF está listo para descargar.</div>
+                        <div style="margin-top: 25px; display: none;" id="downloadLinkContainer">
+                            <a href="#" class="btn" id="downloadLink">
+                                <i class="fas fa-download"></i> Descargar ahora
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="status-message" id="errorMessage" style="display: none;">
+                    <div class="close-status" id="closeError">&times;</div>
+                    <i class="fas fa-exclamation-circle" style="color: var(--itb-accent);"></i>
+                    <div>
+                        <div id="errorTitle">Ocurrió un problema</div>
+                        <div id="errorMessageText">El archivo no pudo ser convertido. Intente nuevamente.</div>
+                        <div style="margin-top: 25px;">
+                            <button class="btn-secondary" id="closeErrorBtn" style="padding: 10px 25px;">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Signature Modal -->
+    <div id="signModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-pen-nib"></i> Firmar Documento Digitalmente</h3>
+                <span class="close-modal-sign">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p id="signFileName" class="share-file-name">Documento.pdf</p>
+                <form id="signForm">
+                    <div id="signRealInputs">
+                        <div class="form-group">
+                            <label for="p12File">Certificado Digital (.p12, .pfx):</label>
+                            <input type="file" id="p12File" class="form-control" accept=".p12,.pfx" required>
+                            <small style="color: var(--itb-gray);">Sube tu archivo de firma electrónica.</small>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="p12Password">Contraseña del certificado:</label>
+                        <input type="password" id="p12Password" class="form-control"
+                            placeholder="Cualquier clave en simulación" required>
+                    </div>
+
+                    <div id="signError" class="modal-error-message"
+                        style="display: none; color: #e74c3c; margin-bottom: 15px; font-size: 0.9rem;"></div>
+
+                    <div class="modal-actions">
+                        <button type="button" class="btn-secondary close-modal-sign-btn">Cancelar</button>
+                        <button type="submit" class="btn" id="confirmSignBtn">
+                            <i class="fas fa-check-circle"></i> Procesar Firma
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Share Modal -->
+    <div id="shareModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-envelope"></i> Compartir por Correo</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p id="shareFileName" class="share-file-name">Documento.docx</p>
+                <form id="shareForm">
+                    <div class="form-group">
+                        <label for="shareEmail">Correo del destinatario:</label>
+                        <input type="email" id="shareEmail" class="form-control" placeholder="usuario@itb.edu.ec"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="shareSubject">Asunto:</label>
+                        <input type="text" id="shareSubject" class="form-control" value="Documento compartido" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="shareLevel">Permiso en el sistema:</label>
+                        <select id="shareLevel" class="form-control">
+                            <option value="viewer">Lector (Solo ver)</option>
+                            <option value="editor">Editor (Puede eliminar/actualizar)</option>
+                            <option value="none">- (Solo enviar por correo)</option>
+                        </select>
+                    </div>
+
+                    <div id="shareError" class="modal-error-message" style="display: none;"></div>
+
+                    <div class="modal-actions">
+                        <button type="button" class="btn-secondary close-modal-btn">Cancelar</button>
+                        <button type="submit" class="btn">Compartir</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete User Modal -->
+    <div id="deleteUserModal" class="modal" style="z-index: 1050;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-user-times"></i> Eliminar Usuario</h3>
+                <span class="close-modal-delete-user">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p>¿Estás seguro de que deseas eliminar permanentemente al usuario <strong id="deleteUserEmail"></strong>?</p>
+                <p style="color: var(--itb-accent); font-size: 0.9rem; margin-top: 10px;">
+                    <i class="fas fa-exclamation-triangle"></i> Esta acción no se puede deshacer y eliminará todos los documentos asociados.
+                </p>
+                <div class="modal-actions" style="margin-top: 25px;">
+                    <button type="button" class="btn-secondary close-modal-delete-user-btn">Cancelar</button>
+                    <button type="button" class="btn" id="confirmDeleteUserBtn" style="background-color: var(--itb-accent);">
+                        <i class="fas fa-trash-alt"></i> Eliminar Usuario
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Change Role Modal -->
+    <div id="changeRoleModal" class="modal" style="z-index: 1050;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-user-shield"></i> Cambiar Rol de Usuario</h3>
+                <span class="close-modal-change-role">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p>¿Cambiar el rol de <strong id="changeRoleEmail"></strong> a <strong id="changeRoleNewText"></strong>?</p>
+                <div class="modal-actions" style="margin-top: 25px;">
+                    <button type="button" class="btn-secondary close-modal-change-role-btn">Cancelar</button>
+                    <button type="button" class="btn" id="confirmChangeRoleBtn">
+                        <i class="fas fa-check-circle"></i> Confirmar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Annotate Modal -->
+    <div id="annotateModal" class="modal">
+        <div class="modal-content" style="max-width: 90%; width: 1000px;">
+            <div class="modal-header">
+                <h3><i class="fas fa-pencil-alt"></i> Anotar Documento PDF</h3>
+                <span class="close-modal-annotate">&times;</span>
+            </div>
+            <div class="modal-body"
+                style="padding: 0; overflow: hidden; display: flex; flex-direction: column; height: 80vh;">
+                <div class="annotate-toolbar"
+                    style="padding: 15px 20px; border-bottom: 1px solid var(--itb-border); display: flex; justify-content: space-between; align-items: center; background: #f9f9f9;">
+                    <div id="annotateFileName" style="font-weight: 600; color: var(--itb-primary);">Documento.pdf</div>
+                    <div class="pagination-controls" style="display: flex; align-items: center; gap: 10px;">
+                        <button class="btn btn-sm" id="prevPageBtn"><i class="fas fa-chevron-left"></i></button>
+                        <span style="font-size: 0.9rem;">Página <span id="currentAnnotatePage">1</span> de <span
+                                id="totalAnnotatePages">1</span></span>
+                        <button class="btn btn-sm" id="nextPageBtn"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+
+                <div id="pdfViewerContainer"
+                    style="flex: 1; overflow: auto; background: #525659; position: relative; display: flex; justify-content: center; padding: 20px;">
+                    <div id="pdfCanvasWrapper"
+                        style="position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.3); border: 1px solid #000; cursor: crosshair;">
+                        <canvas id="pdfCanvas"></canvas>
+                        <div id="annotationsOverlay"
+                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;">
+                        </div>
+                    </div>
+
+                    <!-- Floating form for notes -->
+                    <div id="floatingNoteForm"
+                        style="display: none; position: absolute; background: white; border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); padding: 15px; width: 250px; z-index: 1000; border: 1px solid var(--itb-secondary);">
+                        <h5 style="margin-top: 0; margin-bottom: 10px; font-size: 0.9rem; color: var(--itb-primary);">
+                            Nueva Anotación</h5>
+                        <textarea id="noteText"
+                            style="width: 100%; height: 80px; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-family: inherit; font-size: 0.85rem; resize: none; margin-bottom: 10px;"
+                            placeholder="Escribe aquí tu observación..."></textarea>
+                        <div style="display: flex; justify-content: flex-end; gap: 8px;">
+                            <button class="btn btn-sm" id="cancelNote"
+                                style="background: var(--itb-gray); height: 30px; padding: 0 10px; font-size: 0.75rem;">Cancelar</button>
+                            <button class="btn btn-sm" id="saveNote"
+                                style="height: 30px; padding: 0 10px; font-size: 0.75rem;">Aceptar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer"
+                    style="padding: 15px 20px; border-top: 1px solid var(--itb-border); display: flex; justify-content: flex-end; gap: 10px; background: white;">
+                    <button class="btn close-modal-annotate-btn"
+                        style="height: 40px; background: #95a5a6; border-color: #7f8c8d;">
+                        <i class="fas fa-times-circle"></i> Cerrar
+                    </button>
+                    <button class="btn" id="saveAndSendAnnotateBtn" style="height: 40px;">
+                        <i class="fas fa-save"></i> Guardar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Admin Users Modal -->
+    <div id="adminUsersModal" class="modal">
+        <div class="modal-content" style="max-width: 800px;">
+            <div class="modal-header">
+                <h3><i class="fas fa-users-cog"></i> Gestión de Usuarios</h3>
+                <span class="close-modal-admin-users">&times;</span>
+            </div>
+            <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
+                <p style="margin-bottom: 15px; color: var(--itb-gray);">Administración de cuentas y permisos del sistema</p>
+                <div class="admin-table-container" style="margin-top: 0;">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Email</th>
+                                <th>Rol</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminUsersTableBody">
+                            <!-- Los usuarios se cargarán dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="auth-utils.js"></script>
+    <script src="modules/upload/upload.js"></script>
+    <script src="modules/history/history.js"></script>
+    <script src="modules/shared/shared.js"></script>
+    <script src="modules/validate/validate.js"></script>
+    <script src="script.js"></script>
+    <script src="user-dropdown.js"></script>
+</body>
+
+</html>

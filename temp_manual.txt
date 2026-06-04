@@ -1,0 +1,779 @@
+INSTITUTO SUPERIOR UNIVERSITARIO BOLIVARIANO 
+DE TECNOLOGÍA 
+Carrera Técnico en Desarrollo de Software 
+ 
+Proyecto: Diseño y Desarrollo del Módulo de Registro de Clientes 
+y Control de Medidas de la “SASTRERÍA MOLINA” 
+Manual de usuario 
+VERSIÓN: 1.0      
+FECHA DE REVISIÓN: 5/6/2026 
+Encargado: 
+Responsable del Cambio 
+Aprobado por 
+Version 
+Fecha 
+Benavides Molina Anderson Froilan 
+Salazar Bonilla Jose Eduardo 
+1.0 
+5/6/2026 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2 
+Índice de Contenidos 
+Sección 1 Introducción ................................................................................................ 4 
+1.1 Pre-requisitos ..................................................................................................... 4 
+1.2 Alcances ............................................................................................................. 4 
+1.3 Breve descripción del producto ......................................................................... 5 
+1.4 Taxonomía ......................................................................................................... 6 
+Sección 2 Desarrollo ..................................................................................................... 8 
+2.1 Pre-requisitos funcionales .................................................................................. 8 
+2.2 Usuarios y roles.................................................................................................. 9 
+2.3 Descripción de los módulos ............................................................................... 9 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+3 
+Índice de Tablas 
+Tabla 1 Tabla de Roles .................................................................................................. 9 
+ 
+Índice de Figuras 
+Figura 1 Pantalla de Inicio de Sesión ........................................................................... 10 
+Figura 2 Pantalla Principal (Home) ............................................................................. 11 
+Figura 3 Pantalla Nuevo Registro ................................................................................ 12 
+Figura 4 Pantalla Medidas de Pantalón ........................................................................ 13 
+Figura 5 Pantalla Medidas de Camisa .......................................................................... 14 
+Figura 6 Pantalla Medidas de Ambos .......................................................................... 15 
+Figura 7 Pantalla de Calendario de Entregas ............................................................... 17 
+Figura 8 Detalle de Entregas por Día ........................................................................... 18 
+Figura 9 Pantalla de Listado de Camisas ..................................................................... 19 
+Figura 10 Pantalla de Listado de Pantalón ................................................................... 20 
+Figura 11 Pantalla de Listado Conjunto ....................................................................... 22 
+Figura 12 Menú de Filtros............................................................................................ 23 
+Figura 13 Pantalla Información del Cliente ................................................................. 24 
+Figura 14 Confirmación de Retiro de Prenda .............................................................. 25 
+Figura 15 Pantalla Consulta y Actualización de Medidas ........................................... 26 
+ 
+ 
+4 
+Sección 1 Introducción  
+1.1 Pre-requisitos 
+Antes de utilizar el Sistema de Gestión de Clientes y Medidas de la Sastrería 
+Molina, el usuario debe cumplir con los siguientes requisitos: 
+– 
+Contar con un dispositivo smartphone Android con versión 8.0 (API 26) o 
+superior.  
+– 
+Tener la aplicación Sastrería Molina instalada en el dispositivo Android.  
+– 
+Contar con un usuario y contraseña previamente registrado en el sistema, o tener 
+la huella dactilar configurada en el dispositivo.  
+– 
+Disponer de una conexión estable a Internet (Wi-Fi o datos móviles) para la 
+sincronización de datos con Firebase.  
+– 
+El dispositivo debe contar con un sensor de huella dactilar integrado para el 
+método de autenticación biométrica.  
+– 
+Tener conocimientos básicos del proceso de registro de clientes y toma de 
+medidas en una sastrería. 
+1.2 Alcances 
+El sistema está diseñado para facilitar el registro, control y administración de los 
+clientes y sus medidas anatómicas atendidos en la Sastrería Molina. 
+Este manual cubre las funciones principales del sistema para el único usuario 
+autorizado: 
+– 
+Sastre (Administrador): 
+– 
+Accede al sistema mediante usuario y contraseña o huella dactilar. 
+– 
+Registra nuevos clientes con su información general y medidas 
+anatómicas. 
+– 
+Consulta el listado de clientes por tipo de prenda (Pantalón, Camisa o 
+Ambos). 
+– 
+Busca y filtra clientes por nombre y estado de la prenda. 
+– 
+Actualiza la información general del cliente y sus medidas. 
+ 
+5 
+– 
+Actualiza el estado de la prenda (Cortado, Retirado). 
+– 
+Visualiza el calendario interactivo de fechas de entrega de prendas. 
+– 
+Registra abonos y consulta el saldo pendiente de cada cliente. 
+• Limitaciones del sistema: 
+– 
+El sistema no permite eliminar registros para proteger el historial del 
+negocio  
+– 
+El sistema es de uso exclusivo en dispositivos Android  
+– 
+Requiere conexión a Internet para sincronizar los datos con Firebase 
+1.3 Breve descripción del producto 
+El Sistema de Gestión de Clientes y Medidas de la Sastrería Molina es una 
+aplicación móvil nativa para Android diseñada para organizar y controlar los datos de los 
+clientes y sus órdenes de confección. Su objetivo principal es facilitar el trabajo del sastre 
+administrador y mejorar el control del negocio. Con este sistema se pueden realizar tareas 
+como: 
+– 
+Registrar nuevos clientes con su información general (nombre, prenda, tela, costos 
+y fecha de entrega).  
+– 
+Registrar y actualizar las medidas anatómicas de pantalón y camisa de cada 
+cliente.  
+– 
+Consultar el listado de clientes filtrado por tipo de prenda (Pantalón, Camisa o 
+Ambos).  
+– 
+Buscar y filtrar clientes por nombre y estado de la prenda.  
+– 
+Actualizar el estado de la prenda (Cortado, Retirado).  
+– 
+Registrar abonos y calcular automáticamente el saldo pendiente.  
+– 
+Visualizar el calendario interactivo de fechas de entrega de prendas.  
+– 
+Controlar el acceso mediante usuario y contraseña o huella dactilar. 
+La aplicación se maneja desde un smartphone Android, lo que permite al sastre 
+gestionar su negocio de forma rápida y cómoda desde su celular mientras atiende a sus 
+clientes. 
+ 
+6 
+1.4 Taxonomía 
+La taxonomía es un glosario de términos técnicos que se usarán de forma 
+frecuente en el sistema. Esto ayuda a que el usuario entienda mejor el significado de 
+ciertas palabras y cómo se aplican dentro del Sistema de Gestión de Clientes y Medidas 
+de la Sastrería Molina: 
+– 
+Usuario: Persona que accede al sistema mediante usuario y contraseña o huella 
+dactilar. En este sistema existe un único usuario autorizado: el sastre 
+administrador.  
+– 
+Autenticación Biométrica: Método de acceso al sistema mediante la verificación 
+de la huella dactilar del administrador registrada en el dispositivo Android.  
+– 
+Registro: Orden de trabajo de un cliente que contiene su información general, tipo 
+de prenda, costos y medidas anatómicas almacenadas en la base de datos.  
+– 
+Medidas Anatómicas: Conjunto de medidas corporales del cliente necesarias 
+para la confección de una prenda (pantalón o camisa).  
+– 
+Prenda: Tipo de confección solicitada por el cliente. Puede ser Pantalón, Camisa 
+o Ambos.  
+– 
+CRU: Operaciones de Crear, Leer y Actualizar. El sistema no permite eliminar 
+registros para proteger el historial del negocio.  
+– 
+Cortado: Estado de la prenda que indica si ya fue cortada por el sastre para iniciar 
+su confección.  
+– 
+Retirado: Estado que indica si el cliente ya retiró su prenda del local.  
+– 
+Abono: Monto de dinero entregado por el cliente como pago parcial de la 
+confección.  
+– 
+Saldo: Monto pendiente de pago calculado automáticamente restando el abono del 
+total.  
+– 
+Formulario: Pantalla de la aplicación para el ingreso o actualización de datos del 
+cliente y sus medidas.  
+– 
+Listado: Vista donde se muestran todos los registros guardados filtrados por tipo 
+de prenda.  
+– 
+Calendario de Entregas: Vista interactiva mensual que muestra las fechas 
+pactadas para la entrega de prendas a los clientes.  
+ 
+7 
+– 
+Firebase: Plataforma de Google que gestiona la autenticación y el 
+almacenamiento de datos en la nube del sistema. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+8 
+Sección 2 Desarrollo 
+2.1 Pre-requisitos funcionales 
+El Sistema de Gestión de Clientes y Medidas de la Sastrería Molina cuenta con 
+funcionalidades que permiten la administración y control de los procesos de registro y 
+confección de prendas. A continuación, se describen: 
+• Gestión de clientes y registros: 
+– 
+El sistema permite registrar y actualizar la información general de los 
+clientes. 
+– 
+Consultar el listado de clientes filtrado por tipo de prenda (Pantalón, 
+Camisa o Ambos). 
+– 
+Buscar y filtrar clientes por nombre y estado de la prenda. 
+– 
+Actualizar el estado de la prenda (Cortado, Retirado). 
+– 
+Registrar abonos y consultar el saldo pendiente automáticamente. 
+• Gestión de medidas: 
+– 
+El sistema permite registrar y actualizar las medidas anatómicas de 
+pantalón y camisa de cada cliente. 
+– 
+Visualizar las medidas registradas de cada cliente desde la pantalla de 
+información. 
+• Gestión de entregas: 
+– 
+Visualizar de forma gráfica e interactiva las fechas de entrega 
+programadas por mes. 
+– 
+Consultar los clientes con entregas programadas para un día específico. 
+• Seguridad: 
+– 
+Acceso controlado mediante usuario y contraseña registrados en Firebase 
+Authentication. 
+– 
+Autenticación biométrica mediante huella dactilar del dispositivo 
+Android. 
+– 
+El sistema restringe cualquier operación de eliminación para proteger el 
+historial del negocio. 
+ 
+ 
+9 
+2.2 Usuarios y roles 
+En el Sistema de Gestión de Clientes y Medidas de la Sastrería Molina se 
+define un único usuario administrador con acceso completo al sistema, ya que la 
+aplicación está diseñada exclusivamente para el uso del sastre dueño del negocio. 
+Tabla 1 
+Tabla de Roles 
+Nombre del Rol 
+Descripción 
+Privilegios Principales 
+Sastre (Administrador) 
+Usuario único con 
+acceso total al sistema 
+Registrar clientes y medidas, consultar 
+listados, actualizar información, controlar 
+estados de prendas y visualizar calendario 
+de entregas 
+Nota: La tabla presenta el único rol del sistema. El Sastre Administrador es el único usuario autorizado para 
+operar la aplicación. 
+2.3 
+Descripción de los módulos 
+– 
+Módulo de Inicio de Sesión 
+Este módulo permite al Sastre Administrador acceder al sistema de la 
+Sastrería Molina mediante dos métodos de autenticación disponibles. 
+– 
+Funciones principales: 
+– 
+Ingresar usuario y contraseña para iniciar sesión.  
+– 
+Acceder rápidamente mediante huella dactilar.  
+– 
+Mostrar un mensaje de error si las credenciales ingresadas son 
+incorrectas. 
+Este módulo garantiza que únicamente el administrador autorizado 
+pueda ingresar al sistema y gestionar la información de los clientes. 
+ 
+  
+ 
+ 
+ 
+10 
+Figura 1 
+Pantalla de Inicio de Sesión 
+ 
+Nota: La figura muestra la Pantalla de Inicio de Sesión de la aplicación Sastrería Molina, donde el 
+administrador puede autenticarse mediante usuario y contraseña o mediante huella dactilar. 
+– 
+Módulo de Pantalla Principal (Home) 
+Este módulo es la pantalla central del sistema tras autenticarse 
+exitosamente. Desde aquí el Sastre Administrador puede acceder de forma rápida 
+e intuitiva a todos los módulos de la aplicación. 
+– 
+Funciones principales: 
+– 
+Registrar un nuevo cliente mediante el botón Nuevo Registro.  
+– 
+Acceder al Calendario de Entregas para visualizar las fechas 
+programadas.  
+– 
+Navegar al listado de Camisas, Pantalones o Conjuntos desde la 
+barra inferior. 
+– 
+Regresar a la pantalla de inicio desde el ícono de casa en la barra 
+de navegación. 
+Este módulo centraliza la navegación del sistema, permitiendo al 
+administrador gestionar todas las operaciones del negocio desde una sola 
+pantalla. 
+ 
+11 
+Figura 2 
+Pantalla Principal (Home) 
+ 
+Nota: La figura muestra la Pantalla Principal (Home) de la aplicación Sastrería Molina, donde el 
+administrador puede acceder al registro de nuevos clientes, calendario de entregas y los listados de 
+camisas, pantalones y conjuntos mediante la barra de navegación inferior. 
+– 
+Módulo de Nuevo Registro 
+Este módulo se activa al presionar el botón Nuevo Registro desde la 
+pantalla principal. Permite al Sastre Administrador registrar la información 
+general de un nuevo cliente y su orden de trabajo. 
+– 
+Funciones principales: 
+– 
+Ingresar el nombre completo del cliente.  
+– 
+Seleccionar el tipo de prenda a confeccionar: Pantalón, Camisa o 
+Ambos.  
+– 
+Especificar el tipo y color de la tela a utilizar.  
+– 
+Ingresar el costo total de la confección.  
+– 
+Registrar el abono inicial realizado por el cliente.  
+– 
+Visualizar automáticamente el saldo pendiente calculado.  
+– 
+Seleccionar la fecha de entrega pactada con el cliente.  
+– 
+Guardar el registro con el botón Guardar, o continuar al ingreso 
+de medidas con el botón Continuar a Medidas. 
+ 
+12 
+Este módulo es el punto de entrada para registrar cada nueva orden de 
+trabajo, garantizando que la información del cliente quede almacenada de 
+forma segura en la base de datos. 
+Figura 3 
+Pantalla Nuevo Registro 
+ 
+Nota: La figura muestra el Formulario de Nuevo Registro, donde el administrador ingresa los datos 
+generales del cliente: nombre, tipo de prenda, tela, costo total, abono, saldo calculado automáticamente 
+y fecha de entrega, con opción de guardar o continuar al ingreso de medidas. 
+– 
+Módulo de Medidas de Pantalón 
+Este módulo se activa al presionar el botón Continuar a Medidas desde el 
+formulario de Nuevo Registro, cuando el tipo de prenda seleccionada es 
+Pantalón. Permite registrar todas las medidas anatómicas necesarias para la 
+confección. 
+– 
+Funciones principales: 
+– 
+Ingresar las medidas detalladas del pantalón: Largo Total, 
+Entrepierna, Cintura, Cadera, Rodilla, Basta, Muslo y Tiro.  
+– 
+Añadir observaciones o detalles especiales de confección en el 
+campo de detalles.  
+ 
+13 
+– 
+Regresar a la pantalla de registro con el botón Regresar al 
+Registro, guardando automáticamente las medidas ingresadas. 
+Este módulo garantiza que todas las medidas anatómicas del cliente 
+queden registradas con precisión y vinculadas a su orden de trabajo en la base 
+de datos. 
+Figura 4 
+Pantalla Medidas de Pantalón 
+ 
+Nota: La figura muestra el Formulario de Medidas de Pantalón, donde el administrador ingresa las 
+medidas anatómicas del cliente (Largo Total, Entrepierna, Cintura, Cadera, Rodilla, Basta, Muslo y 
+Tiro), junto a un campo de detalles especiales y el botón para regresar al registro. 
+– 
+Módulo de Medidas de Camisa 
+Este módulo se activa al presionar el botón Continuar a Medidas desde el 
+formulario de Nuevo Registro, cuando el tipo de prenda seleccionada es Camisa. 
+Permite registrar todas las medidas anatómicas necesarias para la confección. 
+– 
+Funciones principales: 
+– 
+Ingresar las medidas detalladas de la camisa: Largo, Hombrera, 
+Manga, Pecho, Cuello y Puño.  
+ 
+14 
+– 
+Añadir observaciones o detalles especiales de confección en el 
+campo de detalles.  
+– 
+Regresar a la pantalla de registro con el botón Regresar al 
+Registro, guardando automáticamente las medidas ingresadas. 
+Este módulo garantiza que todas las medidas anatómicas del cliente 
+queden registradas con precisión y vinculadas a su orden de trabajo en la base 
+de datos. 
+Figura 5 
+Pantalla Medidas de Camisa 
+ 
+Nota: La figura muestra el Formulario de Medidas de Camisa, donde el administrador ingresa las 
+medidas anatómicas del cliente (Largo, Hombrera, Manga, Pecho, Cuello y Puño), junto a un campo de 
+detalles especiales y el botón para regresar al registro. 
+– 
+Módulo de Medidas de Pantalón y Camisa (Ambos) 
+Este módulo se activa al presionar el botón Continuar a Medidas desde el 
+formulario de Nuevo Registro, cuando el tipo de prenda seleccionada es Ambos. 
+Permite registrar en una sola pantalla todas las medidas anatómicas necesarias 
+para la confección del pantalón y la camisa simultáneamente. 
+– 
+Funciones principales: 
+ 
+15 
+– 
+Ingresar las medidas detalladas del pantalón: Largo Total, 
+Entrepierna, Cintura, Cadera, Rodilla, Basta, Muslo y Tiro, 
+junto a su campo de detalles especiales.  
+– 
+Ingresar las medidas detalladas de la camisa: Largo, Hombrera, 
+Manga, Pecho, Cuello y Puño, junto a su campo de detalles 
+especiales.  
+– 
+Añadir observaciones adicionales de confección para cada prenda 
+de forma independiente.  
+– 
+Regresar a la pantalla de registro con el botón Regresar al 
+Registro, guardando automáticamente todas las medidas 
+ingresadas. 
+Este módulo permite registrar en una sola pantalla todas las medidas 
+anatómicas de ambas prendas, vinculándolas al registro del cliente en la base 
+de datos. 
+Figura 6 
+Pantalla Medidas de Ambos 
+ 
+Nota: La figura muestra el Formulario de Medidas de Pantalón y Camisa (Ambos), donde el 
+administrador ingresa en una sola pantalla todas las medidas anatómicas del cliente para ambas 
+prendas, cada una con su propio campo de detalles especiales y el botón para regresar al registro. 
+ 
+16 
+– 
+Módulo de Calendario de Entregas 
+Este módulo se activa al presionar el botón Calendario de Entrega desde 
+la pantalla principal. Permite al Sastre Administrador visualizar de forma gráfica e 
+interactiva todas las fechas de entrega de prendas programadas. 
+– 
+Funciones principales: 
+– 
+Visualizar el calendario mensual con las fechas de entrega 
+registradas.  
+– 
+Identificar el tipo de prenda por código de colores:  
+– 
+  Morado → Pantalón 
+– 
+  Verde → Camisa 
+– 
+  Rojo → Ambos 
+– 
+Navegar entre meses para consultar entregas pasadas o futuras.  
+– 
+Seleccionar un día específico para ver el listado de clientes con 
+entrega programada en esa fecha. 
+Este módulo es de solo lectura, por lo que no permite editar ni 
+modificar ningún dato desde esta vista. Su propósito es brindar al 
+administrador una visión clara y organizada de los trabajos pendientes de 
+entrega. 
+ 
+17 
+Figura 7 
+Pantalla de Calendario de Entregas 
+ 
+Nota: La figura muestra la Pantalla de Calendario de Entregas, donde el administrador puede visualizar 
+las fechas de entrega programadas del mes, identificando el tipo de prenda mediante el código de 
+colores (morado para pantalón, verde para camisa y rojo para ambos). 
+– 
+Detalle de Entregas por Día 
+Este detalle se activa al presionar un día específico dentro del Calendario 
+de Entregas. Muestra un diálogo emergente con el listado de clientes que tienen 
+su entrega programada para esa fecha. 
+– 
+Funciones principales: 
+– 
+Mostrar el día y mes seleccionado como título del diálogo.  
+– 
+Listar los clientes con entrega programada para ese día, 
+indicando el nombre del cliente y el tipo de prenda a entregar.  
+– 
+Identificar visualmente el tipo de prenda mediante el código de 
+colores (verde para camisa, morado para pantalón y rojo para 
+ambos). 
+Esta vista es de solo lectura y permite al administrador consultar 
+rápidamente qué prendas debe tener listas para entregar en una fecha 
+determinada. 
+ 
+18 
+Figura 8 
+Detalle de Entregas por Día 
+ 
+Nota: La figura muestra el diálogo emergente del Calendario de Entregas al seleccionar un día 
+específico, donde se visualiza el nombre del cliente y el tipo de prenda programada para esa fecha. 
+– 
+Modulo de Listado de Camisas 
+Este módulo se accede desde el ícono correspondiente en la barra de 
+navegación inferior. Permite al Sastre Administrador visualizar y gestionar todas 
+las órdenes de trabajo de camisas registradas en el sistema. 
+– 
+Funciones principales: 
+– 
+Buscar un cliente específico de forma rápida mediante la barra de 
+búsqueda.  
+– 
+Filtrar el listado mediante el menú de filtros, con las opciones:  
+– 
+Solo Pendientes 
+– 
+Solo Retirados 
+– 
+Solo Cortados 
+– 
+No Cortados 
+– 
+Mostrar Todos 
+– 
+Ordenar el listado alfabéticamente (A-Z) por nombre del cliente.  
+– 
+Visualizar el listado de clientes con sus columnas de Nombre, 
+Cortado, Abono y Saldo.  
+ 
+19 
+– 
+Navegar a otras secciones del sistema desde la barra de 
+navegación inferior. 
+Este módulo permite al administrador controlar el estado de cada orden 
+de camisa, verificando rápidamente qué prendas están cortadas, cuáles tienen 
+saldo pendiente y cuáles ya fueron retiradas. 
+Figura 9 
+Pantalla de Listado de Camisas 
+ 
+Nota: La figura muestra la Pantalla de Listado de Camisas, donde el administrador puede buscar, filtrar 
+y ordenar los registros de clientes, visualizando el estado de cortado, abono y saldo pendiente de cada 
+orden de camisa. 
+– 
+Módulo de Listado de Pantalones 
+Este módulo se accede desde el ícono correspondiente en la barra de 
+navegación inferior. Permite al Sastre Administrador visualizar y gestionar todas 
+las órdenes de trabajo de pantalones registradas en el sistema. 
+– 
+Funciones principales: 
+– 
+Buscar un cliente específico de forma rápida mediante la barra de 
+búsqueda.  
+– 
+Filtrar el listado mediante el menú de filtros, con las opciones:  
+ 
+20 
+– 
+Solo Pendientes 
+– 
+Solo Retirados 
+– 
+Solo Cortados 
+– 
+No Cortados 
+– 
+Mostrar Todos 
+– 
+Ordenar el listado alfabéticamente (A-Z) por nombre del cliente.  
+– 
+Visualizar el listado de clientes con sus columnas de Nombre, 
+Cortado, Abono y Saldo.  
+– 
+Identificar la sección activa desde la barra de navegación 
+inferior. 
+Este módulo permite al administrador controlar el estado de cada orden 
+de pantalón, verificando rápidamente qué prendas están cortadas, cuáles tienen 
+saldo pendiente y cuáles ya fueron retiradas. 
+Figura 10 
+Pantalla de Listado de Pantalón 
+ 
+Nota: La figura muestra la Pantalla de Listado de Pantalones, donde el administrador puede buscar, 
+filtrar y ordenar los registros de clientes, visualizando el estado de cortado, abono y saldo pendiente de 
+cada orden de pantalón. 
+ 
+ 
+21 
+– 
+Modulo de Listado de Conjuntos 
+Este módulo se accede desde el ícono correspondiente en la barra de 
+navegación inferior. Permite al Sastre Administrador visualizar y gestionar todas 
+las órdenes de trabajo donde el cliente solicitó la confección de pantalón y 
+camisa simultáneamente. 
+– 
+Funciones principales: 
+– 
+Buscar un cliente específico de forma rápida mediante la barra de 
+búsqueda.  
+– 
+Filtrar el listado mediante el menú de filtros, con las opciones:  
+– 
+Solo Pendientes 
+– 
+Solo Retirados 
+– 
+Solo Cortados 
+– 
+No Cortados 
+– 
+Mostrar Todos 
+– 
+Ordenar el listado alfabéticamente (A-Z) por nombre del cliente.  
+– 
+Visualizar el listado de clientes con sus columnas de Nombre, 
+Cortado, Abono y Saldo.  
+– 
+Identificar la sección activa desde la barra de navegación 
+inferior. 
+Este módulo permite al administrador controlar el estado de cada orden 
+de conjunto, verificando rápidamente qué prendas están cortadas, cuáles tienen 
+saldo pendiente y cuáles ya fueron retiradas. 
+ 
+22 
+Figura 11 
+Pantalla de Listado Conjunto 
+ 
+Nota: La figura muestra la Pantalla de Listado de Conjuntos, donde el administrador puede buscar, 
+filtrar y ordenar los registros de clientes que solicitaron pantalón y camisa, visualizando el estado de 
+cortado, abono y saldo pendiente de cada orden. 
+– 
+Menú de Filtros 
+Este menú desplegable se activa al presionar el botón de filtro desde 
+cualquiera de los listados (Camisas, Pantalones o Conjuntos). Permite al Sastre 
+Administrador segmentar el listado de clientes según el estado actual de cada 
+orden de trabajo. 
+– 
+Funciones principales: 
+– 
+Solo Pendientes: Muestra únicamente los clientes cuya prenda aún 
+no ha sido entregada.  
+– 
+Solo Retirados: Muestra únicamente los clientes que ya retiraron 
+su prenda.  
+– 
+Solo Cortados: Muestra únicamente las prendas que ya fueron 
+cortadas.  
+– 
+No Cortados: Muestra únicamente las prendas que aún no han sido 
+cortadas.  
+ 
+23 
+– 
+Mostrar Todos: Elimina cualquier filtro aplicado y muestra el 
+listado completo. 
+El filtro actualmente aplicado se muestra como etiqueta en la parte 
+superior del listado, permitiendo al administrador identificar rápidamente qué 
+vista está consultando. 
+Figura 12 
+Menú de Filtros 
+ 
+Nota: La figura muestra el menú desplegable de filtros del listado de Camisas, donde el administrador 
+puede segmentar los registros por estado seleccionando entre Solo Pendientes, Solo Retirados, Solo 
+Cortados, No Cortados o Mostrar Todos. 
+– 
+Modulo de Información del Cliente 
+Este módulo se activa al presionar el nombre de un cliente desde 
+cualquiera de los listados (Camisas, Pantalones o Conjuntos). Muestra el detalle 
+completo de la orden de trabajo del cliente seleccionado y permite actualizar su 
+información. 
+– 
+Funciones principales: 
+– 
+Visualizar los datos generales del cliente: nombre, tipo de prenda, 
+tela, total, abono, saldo y fecha de entrega.  
+ 
+24 
+– 
+Navegar entre las pestañas de Información y Medidas del cliente.  
+– 
+Marcar el pedido como Retirado una vez que el cliente haya 
+recogido su prenda.  
+– 
+Actualizar la información del registro mediante el botón 
+Actualizar.  
+– 
+Regresar a la pantalla principal mediante el botón de retroceso. 
+Este módulo permite al administrador consultar y mantener actualizada 
+la información de cada orden de trabajo, controlando el estado del pedido y los 
+pagos realizados por el cliente. 
+Figura 13 
+Pantalla Información del Cliente 
+ 
+Nota: La figura muestra la Pantalla de Información del Cliente, donde el administrador puede consultar 
+los datos generales del pedido (nombre, prenda, tela, total, abono, saldo y fecha de entrega), marcar el 
+pedido como retirado y actualizar la información registrada. 
+– 
+Confirmación de Retiro de Prenda 
+Este diálogo emergente se activa al presionar el botón Retirado desde la 
+pantalla de Información del Cliente. Solicita al administrador confirmar que el 
+cliente ha retirado físicamente su prenda antes de registrar el cambio en el sistema. 
+ 
+25 
+– 
+Funciones principales: 
+– 
+Mostrar el mensaje de confirmación "¿Confirmar entrega de 
+prenda?" antes de aplicar el cambio.  
+– 
+Confirmar el retiro presionando el botón Sí, actualizando el estado 
+del pedido en la base de datos.  
+– 
+Cancelar la acción presionando el botón No, regresando a la 
+pantalla de información sin realizar cambios. 
+Este diálogo de confirmación evita cambios accidentales en el estado 
+de los pedidos, garantizando que el registro de retiro sea intencional y preciso. 
+Figura 14 
+Confirmación de Retiro de Prenda 
+ 
+Nota: La figura muestra el diálogo de confirmación de retiro de prenda, donde el administrador debe 
+confirmar presionando Sí para registrar la entrega al cliente, o cancelar la acción presionando No. 
+– 
+Modulo de Consulta y Actualización de Medidas 
+Este módulo se activa al presionar la pestaña Medidas desde la pantalla de 
+Información del Cliente. Muestra las medidas anatómicas registradas del cliente y 
+permite actualizarlas si es necesario. 
+– 
+Funciones principales: 
+ 
+26 
+– 
+Visualizar las medidas registradas del cliente organizadas por 
+secciones: Medidas de Pantalón y Medidas de Camisa.  
+– 
+Desplegar o contraer cada sección de medidas mediante el ícono 
+correspondiente.  
+– 
+Actualizar las medidas de la camisa: Largo, Hombrera, Manga, 
+Pecho, Cuello y Puño.  
+– 
+Añadir o modificar observaciones adicionales de confección en el 
+campo de detalles especiales. 
+Este módulo permite al administrador consultar las medidas guardadas 
+de cada cliente y realizar correcciones o ajustes cuando sea necesario, 
+manteniéndolas siempre actualizadas en la base de datos. 
+Figura 15 
+Pantalla Consulta y Actualización de Medidas 
+ 
+Nota: La figura muestra la pestaña de Medidas del cliente, donde el administrador puede consultar y 
+actualizar las medidas anatómicas registradas de pantalón y camisa, desplegando cada sección de forma 
+independiente y modificando los valores cuando sea necesario. 
+ 

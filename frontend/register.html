@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrarse | EVA-ITB</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,300..700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="login-styles.css">
+    <link rel="shortcut icon" type="image/x-icon"
+        href="https://eva.itb.edu.ec/pluginfile.php/1/theme_mb2nl/favicon/1761233098/Stickers%20-%20nuevos%20-%202023_Mesa%20de%20trabajo%201%20copia%205%20%281%29%20-%20copia.ico">
+</head>
+
+<body class="login-body">
+
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-section">
+                    <div class="main-logo">
+                        <a href="index.html" aria-label="EVA Instituto Tecnologico Bolivariano">
+                            <img class="logo-light"
+                                src="https://eva.itb.edu.ec/pluginfile.php/1/theme_mb2nl/logo/1761233098/Stickers%20-%20nuevos%20-%202023_Mesa%20de%20trabajo%201%20copia%205%20%281%29.png"
+                                alt="EVA Instituto Tecnologico Bolivariano">
+                        </a>
+                    </div>
+                    <div class="institution-info">
+                        <h1>Instituto Tecnológico Bolivariano</h1>
+                        <p>Entorno Virtual de Aprendizaje (EVA)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="login-main">
+        <div class="login-container">
+            <div class="login-card">
+                <div class="login-logo">
+                    <i class="fas fa-user-plus"></i>
+                </div>
+
+                <h2 class="login-title">Crear Cuenta</h2>
+                <p class="login-subtitle">Únete al EVA del Instituto Tecnológico Bolivariano</p>
+
+                <form class="login-form" id="registerForm">
+                    <div class="form-group">
+                        <label for="email" class="form-label">
+                            <i class="fas fa-envelope"></i> Correo Electrónico
+                        </label>
+                        <input type="email" id="email" name="email" class="form-input" placeholder="tu.email@itb.edu.ec"
+                            required>
+                        <span class="form-error" id="emailError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password" class="form-label">
+                            <i class="fas fa-lock"></i> Contraseña
+                        </label>
+                        <div class="password-wrapper">
+                            <input type="password" id="password" name="password" class="form-input"
+                                placeholder="Mínimo 8 caracteres" required>
+                            <button type="button" class="password-toggle" id="togglePassword">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <span class="form-error" id="passwordError"></span>
+                        <div class="password-strength" id="passwordStrength">
+                            <div class="strength-bar">
+                                <div class="strength-progress" id="strengthProgress"></div>
+                            </div>
+                            <span class="strength-text" id="strengthText">Fortaleza: débil</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmPassword" class="form-label">
+                            <i class="fas fa-lock"></i> Confirmar Contraseña
+                        </label>
+                        <div class="password-wrapper">
+                            <input type="password" id="confirmPassword" name="confirmPassword" class="form-input"
+                                placeholder="Repite tu contraseña" required>
+                            <button type="button" class="password-toggle" id="toggleConfirmPassword">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <span class="form-error" id="confirmPasswordError"></span>
+                    </div>
+                    <div class="form-group checkbox" style="margin-bottom: 20px;">
+                        <input type="checkbox" id="terms" name="terms" required>
+                        <label for="terms">Acepto los <a href="#"
+                                style="color: var(--itb-primary); text-decoration: none;">términos y
+                                condiciones</a></label>
+                    </div>
+
+                    <button type="submit" class="login-btn">
+                        <i class="fas fa-user-plus"></i> Crear Cuenta
+                    </button>
+                </form>
+
+                <div class="login-footer">
+                    <div class="footer-link">
+                        ¿Ya tienes cuenta? <a href="login.html"
+                            style="color: var(--itb-primary); text-decoration: none; font-weight: 600;">Inicia
+                            sesión</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+    <script src="auth-utils.js"></script>
+    <script src="register-script.js"></script>
+</body>
+
+</html>

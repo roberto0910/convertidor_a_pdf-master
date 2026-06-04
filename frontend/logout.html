@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cerrando sesión | EVA-ITB</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,300..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="shortcut icon" type="image/x-icon" href="https://eva.itb.edu.ec/pluginfile.php/1/theme_mb2nl/favicon/1761233098/Stickers%20-%20nuevos%20-%202023_Mesa%20de%20trabajo%201%20copia%205%20%281%29%20-%20copia.ico">
+    <style>
+        .logout-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .logout-card {
+            background: white;
+            border-radius: 15px;
+            padding: 50px 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            max-width: 500px;
+            width: 100%;
+            animation: fadeInUp 0.8s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .logout-icon {
+            font-size: 80px;
+            color: var(--itb-primary);
+            margin-bottom: 25px;
+        }
+        
+        .logout-title {
+            font-size: 2.2rem;
+            color: var(--itb-primary);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .logout-message {
+            color: var(--itb-gray);
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .logout-spinner {
+            margin: 30px 0;
+            color: var(--itb-secondary);
+        }
+        
+        .logout-footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--itb-border);
+            font-size: 0.9rem;
+            color: var(--itb-gray);
+        }
+        
+        .logout-progress {
+            width: 100%;
+            height: 4px;
+            background: var(--itb-light);
+            border-radius: 2px;
+            margin: 25px 0;
+            overflow: hidden;
+        }
+        
+        .logout-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--itb-secondary), var(--itb-accent));
+            width: 0%;
+            transition: width 3s linear;
+        }
+    </style>
+</head>
+<body>
+    <div class="logout-container">
+        <div class="logout-card">
+            <i class="fas fa-sign-out-alt logout-icon"></i>
+            <h1 class="logout-title">Cerrando sesión</h1>
+            <p class="logout-message">Estamos finalizando tu sesión de manera segura. Serás redirigido al inicio de sesión en unos momentos...</p>
+            
+            <div class="logout-spinner">
+                <i class="fas fa-spinner fa-spin fa-3x"></i>
+            </div>
+            
+            <div class="logout-progress">
+                <div class="logout-progress-bar" id="progressBar"></div>
+            </div>
+            
+            <div class="logout-footer">
+                <p>© 2024 Instituto Superior Tecnológico Bolivariano de Tecnología</p>
+                <p style="margin-top: 5px; font-size: 0.8rem;">Procesando cierre de sesión...</p>
+            </div>
+        </div>
+    </div>
+    
+    <script src="logout.js"></script>
+    <script>
+        // Script mínimo adicional - SOLO para emergencias
+        // Remover cualquier beforeunload existente
+        window.onbeforeunload = null;
+    
+        // Función de emergencia para redirección
+        setTimeout(function() {
+            if (window.location.href.includes('logout')) {
+                window.location.href = 'login.html';
+            }
+        }, 3000);
+    </script>
+</body>
+</html>

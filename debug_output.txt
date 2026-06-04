@@ -1,0 +1,34 @@
+--- USERS ---
+ID: 1, Email: roberto@itb.edu.ec
+ID: 2, Email: steven@itb.edu.ec
+
+--- DOCUMENTS ---
+ID: 1, Name: plan de estuido-Alexa Carpio.docx, OwnerID: 2
+ID: 2, Name: ANTE PROYECTO.docx, OwnerID: 1
+ID: 3, Name: soporte 6.docx, OwnerID: 1
+ID: 4, Name: soporte 5.docx, OwnerID: 2
+ID: 5, Name: vocabulary-Alexa Carpio.docx, OwnerID: 2
+ID: 6, Name: soporte 1.docx, OwnerID: 1
+ID: 7, Name: soporte 3.docx, OwnerID: 1
+ID: 8, Name: soporte 4.docx, OwnerID: 2
+ID: 9, Name: soporte 2.docx, OwnerID: 1
+
+--- PERMISSIONS ---
+ID: 1, DocID: 1, UserID: 2, Level: owner
+ID: 2, DocID: 1, UserID: 1, Level: editor
+ID: 3, DocID: 2, UserID: 1, Level: owner
+ID: 4, DocID: 2, UserID: 2, Level: viewer
+ID: 5, DocID: 3, UserID: 1, Level: owner
+ID: 6, DocID: 3, UserID: 2, Level: editor
+ID: 7, DocID: 4, UserID: 2, Level: owner
+ID: 8, DocID: 4, UserID: 1, Level: viewer
+ID: 9, DocID: 5, UserID: 2, Level: owner
+ID: 10, DocID: 5, UserID: 1, Level: viewer
+ID: 11, DocID: 6, UserID: 1, Level: owner
+ID: 12, DocID: 6, UserID: 2, Level: editor
+ID: 13, DocID: 7, UserID: 1, Level: owner
+ID: 14, DocID: 7, UserID: 2, Level: viewer
+ID: 15, DocID: 8, UserID: 2, Level: owner
+ID: 16, DocID: 8, UserID: 1, Level: viewer
+ID: 17, DocID: 9, UserID: 1, Level: owner
+ID: 18, DocID: 9, UserID: 2, Level: viewer

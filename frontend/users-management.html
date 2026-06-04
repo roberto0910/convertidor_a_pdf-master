@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Usuarios | EVA-ITB</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,300..700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="shortcut icon" type="image/x-icon"
+        href="https://eva.itb.edu.ec/pluginfile.php/1/theme_mb2nl/favicon/1761233098/Stickers%20-%20nuevos%20-%202023_Mesa%20de%20trabajo%201%20copia%205%20%281%29%20-%20copia.ico">
+    <style>
+        .users-management-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        .users-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .users-header h2 {
+            margin: 0;
+            color: #0050a0;
+            font-size: 28px;
+        }
+
+        .btn-create-user {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-create-user:hover {
+            background-color: #229954;
+        }
+
+        .users-table-wrapper {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .users-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .users-table thead {
+            background-color: #0050a0;
+            color: white;
+        }
+
+        .users-table th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .users-table td {
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .users-table tbody tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .user-role-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .role-admin {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .role-user {
+            background-color: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .user-status {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+
+        .status-active {
+            background-color: #28a745;
+        }
+
+        .status-inactive {
+            background-color: #dc3545;
+        }
+
+        .user-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-edit, .btn-delete {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: opacity 0.3s;
+        }
+
+        .btn-edit {
+            background-color: #0050a0;
+            color: white;
+        }
+
+        .btn-delete {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .btn-edit:hover, .btn-delete:hover {
+            opacity: 0.8;
+        }
+
+        .no-users {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        /* Modal para crear usuario */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+            animation: slideIn 0.3s;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 15px;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            color: #0050a0;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .close-modal:hover {
+            color: #000;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--itb-blue);
+            box-shadow: 0 0 4px rgba(0, 80, 160, 0.2);
+        }
+
+        .form-group input:disabled {
+            background-color: #f0f0f0;
+            cursor: not-allowed;
+            color: #999;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 25px;
+        }
+
+        .btn-cancel {
+            background-color: #e0e0e0;
+            color: #333;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-cancel:hover {
+            background-color: #d0d0d0;
+        }
+
+        .btn-submit {
+            background-color: #27ae60;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+
+        .btn-submit:hover:not(:disabled) {
+            background-color: #229954;
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: slideIn 0.3s;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .alert-info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #0050a0;
+            text-decoration: none;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .back-button:hover {
+            color: #003d7a;
+        }
+
+        .users-loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        .users-loading i {
+            font-size: 32px;
+            margin-bottom: 15px;
+            animation: spin 2s linear infinite;
+        }
+    </style>
+</head>
+
+<body class="index-body">
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-section">
+                    <div class="main-logo">
+                        <a href="index.html" aria-label="EVA Instituto Tecnologico Bolivariano">
+                            <img class="logo-light"
+                                src="https://eva.itb.edu.ec/pluginfile.php/1/theme_mb2nl/logo/1761233098/Stickers%20-%20nuevos%20-%202023_Mesa%20de%20trabajo%201%20copia%205%20%281%29.png"
+                                alt="EVA Instituto Tecnologico Bolivariano">
+                        </a>
+                    </div>
+                    <div class="institution-info">
+                        <h1>Instituto Tecnológico Bolivariano</h1>
+                        <p>Entorno Virtual de Aprendizaje (EVA)</p>
+                    </div>
+                </div>
+                <div class="user-info">
+                    <div class="user-avatar" id="userAvatar">RN</div>
+                    <div class="user-details">
+                        <div class="user-name-role">
+                            <div style="font-weight: 600;" id="userName">Usuario</div>
+                            <div id="userRole">Estudiante</div>
+                        </div>
+                        <div class="user-dropdown">
+                            <button class="dropdown-toggle" id="userDropdownBtn">
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <div class="dropdown-menu" id="userDropdownMenu">
+                                <div class="dropdown-header">
+                                    <div class="dropdown-avatar" id="dropdownAvatar">RN</div>
+                                    <div>
+                                        <div style="font-weight: 600;" id="dropdownName">Usuario</div>
+                                        <div style="font-size: 0.8rem; color: var(--itb-gray);" id="dropdownRole">
+                                            Estudiante</div>
+                                    </div>
+                                </div>
+                                <div class="dropdown-divider"></div>
+                                <a href="logout.html" class="dropdown-item">
+                                    <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main content -->
+    <main class="main-content">
+        <div class="users-management-container">
+            <a href="index.html" class="back-button">
+                <i class="fas fa-arrow-left"></i> Volver al dashboard
+            </a>
+
+            <div class="users-header">
+                <h2><i class="fas fa-users-cog"></i> Gestión de Usuarios</h2>
+                <button class="btn-create-user" id="btnCreateUser">
+                    <i class="fas fa-user-plus"></i> Crear Usuario
+                </button>
+            </div>
+
+            <div id="alertContainer"></div>
+
+            <div class="users-table-wrapper">
+                <div id="usersLoading" class="users-loading" style="display: none;">
+                    <i class="fas fa-spinner"></i>
+                    <p>Cargando usuarios...</p>
+                </div>
+                <div id="usersContent">
+                    <table class="users-table" id="usersTable">
+                        <thead>
+                            <tr>
+                                <th>Email</th>
+                                <th>Rol</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody">
+                        </tbody>
+                    </table>
+                    <div id="noUsers" class="no-users" style="display: none;">
+                        <i class="fas fa-users" style="font-size: 32px; color: #ccc; margin-bottom: 10px; display: block;"></i>
+                        <p>No hay usuarios registrados</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal para crear/editar usuario -->
+    <div id="userModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Crear Nuevo Usuario</h3>
+                <button class="close-modal" id="closeModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <form id="userForm">
+                <div id="editModeNotice" style="background-color: #d1ecf1; color: #0c5460; padding: 10px; border-radius: 4px; margin-bottom: 15px; display: none;">
+                    <i class="fas fa-info-circle"></i> Modo edición: Solo puedes cambiar el rol y estado
+                </div>
+
+                <div class="form-group">
+                    <label for="userEmail">Email <span style="color: red;">*</span></label>
+                    <input type="email" id="userEmail" name="email" required placeholder="usuario@example.com" disabled>
+                </div>
+
+                <div class="form-group" id="passwordGroup">
+                    <label for="userPassword">Contraseña <span style="color: red;">*</span></label>
+                    <input type="password" id="userPassword" name="password" required placeholder="Mínimo 8 caracteres"
+                        minlength="8">
+                </div>
+
+                <div class="form-group">
+                    <label for="userRole">Rol <span style="color: red;">*</span></label>
+                    <select id="userRole" name="role" required>
+                        <option value="">Selecciona un rol</option>
+                        <option value="user">Usuario Normal</option>
+                        <option value="admin">Administrador</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="statusGroup">
+                    <label for="userStatus">Estado</label>
+                    <select id="userStatus" name="is_active">
+                        <option value="">Selecciona un estado</option>
+                        <option value="true">Activo</option>
+                        <option value="false">Inactivo</option>
+                    </select>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn-cancel" id="cancelBtn">Cancelar</button>
+                    <button type="submit" class="btn-submit" id="submitBtn">
+                        <span id="submitText">Crear Usuario</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="config.js"></script>
+    <script src="auth-utils.js"></script>
+    <script src="user-dropdown.js"></script>
+    <script src="modules/users-management.js"></script>
+</body>
+
+</html>
